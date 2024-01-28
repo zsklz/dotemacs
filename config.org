@@ -1,0 +1,217 @@
+#+TITLE: zsklz emacs config
+
+* Packages
+#+begin_src emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+#+end_src
+* UI
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (load-theme 'modus-vivendi)
+  (add-to-list 'default-frame-alist
+	       '(font . "Ubuntu Mono-18"))
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (display-line-numbers-mode t)
+  (setq display-line-numbers-type 'relative)
+  (setq whitespace-style '(face space-mark))
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  ;;(add-hook 'prog-mode-hook 'whitespace-mode)
+  (setq column-number-mode t)
+#+end_src
+* Org
+#+begin_src emacs-lisp
+<<<<<<< HEAD
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c k") #'org-capture)
+  (setq org-directory "~/Org/")
+  (setq org-agenda-window-setup 'only-window)
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps t)
+  (setq org-tags-column 0)
+  (add-to-list 'org-modules 'org-habit)
+  (eval-after-load 'org
+    '(org-load-modules-maybe t))
+  (setq org-todo-keywords
+	'((sequence
+	   "TODO(t)"
+	   "NEXT(n)"
+	   "|"
+	   "DONE(d)")))
+
+  (setq org-capture-templates '(("i" "[inbox]" entry
+				 (file "~/Org/inbox.org")
+				 "* %?")))
+
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 5)))
+  (setq org-log-done 'time)
+  (setq org-archive-save-context-info '(category olpath itags ltags))
+  (setq org-archive-subtree-save-file-p t)
+  (setq org-startup-folded t)
+  (setq org-agenda-inhibit-startup t)
+  (setq org-todo-repeat-to-state t)
+  (setq org-stuck-projects '("+project-someday-maybe-TODO=\"DONE\"-SCHEDULED>\"<today>\"" ("NEXT") ("wait")))
+  (setq org-tags-exclude-from-inheritance '("project"))
+  ;; Agenda
+  (setq org-agenda-files "~/Org/agenda.org")
+  (setq org-agenda-text-search-extra-files '(agenda-archives))
+  (setq org-agenda-prefix-format
+	'((agenda . "  %-12t%(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))%s")
+	  (todo . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	  (tags . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	  (search . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))
+  (setq org-agenda-current-time-string "> now <"
+	org-agenda-time-grid
+	'((daily today require-timed)
+	  (800 1000 1200 1400 1600 1800 2000)
+	  " " "")
+	org-agenda-use-time-grid nil
+	org-agenda-breadcrumbs-separator "/"
+	org-habit-graph-column 60
+	org-agenda-start-on-weekday nil
+	org-agenda-skip-scheduled-if-done t
+	org-agenda-skip-deadline-if-done t
+	org-agenda-skip-timestamp-if-done t
+	org-agenda-todo-ignore-scheduled 'future
+	org-agenda-todo-ignore-timestamp 'future)
+  (setq org-agenda-custom-commands
+	'(("i" "Inbox"
+	   ((tags "inbox"
+		  ((org-agenda-overriding-header "Inbox:")
+		   (org-agenda-files '("~/Org/inbox.org"))
+		   (org-agenda-prefix-format "  ")))))
+	  ("w" "Waiting List"
+	   ((tags "wait"
+		  ((org-agenda-overriding-header "Waiting List:")
+		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
+	  ("c" "Completed Today"
+	   ((tags "CLOSED>=\"<today>\""
+		  ((org-agenda-overriding-header "Completed Today:")
+		   (org-agenda-prefix-format " %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))))
+=======
+    (global-set-key (kbd "C-c a") #'org-agenda)
+    (global-set-key (kbd "C-c k") #'org-capture)
+    (setq org-directory "~/Org/")
+    (setq org-agenda-window-setup 'only-window)
+    (setq org-refile-use-outline-path 'file)
+    (setq org-outline-path-complete-in-steps t)
+    (setq org-tags-column 0)
+    (add-to-list 'org-modules 'org-habit)
+    (eval-after-load 'org
+      '(org-load-modules-maybe t))
+    (setq org-todo-keywords
+	  '((sequence
+	     "TODO(t)"
+	     "NEXT(n)"
+	     "|"
+	     "DONE(d)")))
+
+    (setq org-capture-templates '(("i" "[inbox]" entry
+				   (file "~/Org/inbox.org")
+				   "* %?")))
+
+    (setq org-refile-targets '(("gtd.org" :maxlevel . 5)))
+    (setq org-log-done 'time)
+    (setq org-archive-save-context-info '(category olpath itags))
+    (setq org-archive-subtree-save-file-p t)
+    (setq org-startup-folded t)
+    (setq org-agenda-inhibit-startup t)
+    (setq org-todo-repeat-to-state t)
+    (setq org-stuck-projects '("+project-someday-maybe-TODO=\"DONE\"-SCHEDULED>\"<today>\"" ("NEXT") ("wait")))
+    (setq org-tags-exclude-from-inheritance '("project"))
+    ;; Agenda
+    (setq org-agenda-files '("inbox.org" "gtd.org"))
+    (setq org-agenda-text-search-extra-files '(agenda-archives))
+    (setq org-agenda-prefix-format
+	  '((agenda . "  %-12t%(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))%s")
+	    (todo . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	    (tags . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	    (search . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))
+    (setq org-agenda-current-time-string "> now <"
+	  org-agenda-time-grid
+	  '((daily today require-timed)
+	    (800 1000 1200 1400 1600 1800 2000)
+	    " " "")
+	  org-agenda-use-time-grid nil
+	  org-agenda-breadcrumbs-separator "/"
+	  org-habit-graph-column 60
+	  org-agenda-start-on-weekday nil
+	  org-agenda-skip-scheduled-if-done t
+	  org-agenda-skip-deadline-if-done t
+	  org-agenda-skip-timestamp-if-done t
+	  org-agenda-todo-ignore-scheduled 'future
+	  org-agenda-todo-ignore-timestamp 'future)
+    (setq org-agenda-custom-commands
+	  '(("i" "Inbox"
+	     ((tags "inbox"
+		    ((org-agenda-overriding-header "Inbox:")
+		     (org-agenda-files '("~/Org/inbox.org"))
+		     (org-agenda-prefix-format "  ")))))
+	    ("w" "Waiting List"
+	     ((tags "wait"
+		    ((org-agenda-overriding-header "Waiting List:")
+		     (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
+	    ("c" "Completed Today"
+	     ((tags "CLOSED>=\"<today>\""
+		    ((org-agenda-overriding-header "Completed Today:")
+		     (org-agenda-prefix-format " %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))))
+
+#+end_src
+* Tree-sitter
+#+begin_src emacs-lisp
+
+  ;; Tree-sitter highlight
+  ;; Base framework, syntax highlighting.
+  (use-package tree-sitter
+    :diminish (tree-sitter-mode)
+    :hook ((after-init . global-tree-sitter-mode)
+	   (tree-sitter-after-on . tree-sitter-hl-mode)))
+
+  ;; Language bundle.
+  (use-package tree-sitter-langs
+    :demand t
+    :after tree-sitter)
+>>>>>>> 955307b (Switch to two file org agenda config)
+
+#+end_src
+* Elfeed
+#+begin_src emacs-lisp
+     (use-package elfeed
+     :ensure t
+     :init
+     (add-hook 'elfeed-search-mode-hook #'elfeed-update))
+<<<<<<< HEAD
+     (defun elfeed-play-with-mpv ()
+     "Play entry link with mpv."
+     (interactive)
+     (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single))))
+     (message "Opening link with mpv...")
+     (start-process "elfeed-mpv" nil "mpv"  (elfeed-entry-link entry))))
+     (define-key elfeed-search-mode-map "m" #'elfeed-play-with-mpv)
+=======
+     (defun elfeed-play-with-celluloid ()
+     "Play entry link with mpv."
+     (interactive)
+     (let ((entry (if (eq major-mode 'elfeed-show-mode) elfeed-show-entry (elfeed-search-selected :single))))
+     (message "Opening link with celluloid...")
+     (start-process "elfeed-mpv" nil "celluloid"  (elfeed-entry-link entry))))
+     (define-key elfeed-search-mode-map "m" #'elfeed-play-with-celluloid)
+>>>>>>> 955307b (Switch to two file org agenda config)
+
+  (use-package elfeed-org
+       :ensure t
+       :init
+       (setq rmh-elfeed-org-files (list "~/Org/elfeed.org"))
+       :config
+       (elfeed-org))
+#+end_src
+* Vertico
+#+begin_src emacs-lisp
+  (use-package vertico
+  :ensure t
+  :init
+  (vertico-mode))
+#+end_src
