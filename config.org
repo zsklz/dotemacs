@@ -26,7 +26,7 @@
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c k") #'org-capture)
-  (setq org-directory "~/Org/")
+  (setq org-directory "~/Documents/agenda")
   (setq org-agenda-window-setup 'only-window)
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps t)
@@ -42,7 +42,7 @@
 	   "DONE(d)")))
 
   (setq org-capture-templates '(("i" "[inbox]" entry
-				 (file "~/Org/inbox.org")
+				 (file "inbox.org")
 				 "* %?")))
 
   (setq org-refile-targets '(("gtd.org" :maxlevel . 5)))
