@@ -47,6 +47,7 @@
 
   (setq org-refile-targets '(("gtd.org" :maxlevel . 5)))
   (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
   (setq org-archive-save-context-info '(category olpath itags))
   (setq org-archive-subtree-save-file-p t)
   (setq org-startup-folded t)
@@ -92,6 +93,10 @@
 		  ((org-agenda-overriding-header "Completed Today:")
 		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))))
 
+#+end_src
+* Calendar & Diary
+#+begin_src emacs-lisp
+(setq diary-file (concat org-directory "/diary"))
 #+end_src
 * Tree-sitter
 #+begin_src emacs-lisp
