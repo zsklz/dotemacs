@@ -22,6 +22,10 @@
   ;;(add-hook 'prog-mode-hook 'whitespace-mode)
   (setq column-number-mode t)
 #+end_src
+* Backup files
+#+begin_src emacs-lisp
+(setq make-backup-files nil)
+#+end_src
 * Org
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") #'org-agenda)
