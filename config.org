@@ -48,6 +48,7 @@
   (setq org-refile-targets '(("gtd.org" :maxlevel . 5)))
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
+  (setq org-default-notes-file (concat org-directory "/inbox.org"))
   (setq org-archive-save-context-info '(category olpath itags))
   (setq org-archive-subtree-save-file-p t)
   (setq org-startup-folded t)
@@ -98,21 +99,13 @@
 #+begin_src emacs-lisp
 (setq diary-file (concat org-directory "/diary"))
 #+end_src
-* Tree-sitter
+* Treesit
 #+begin_src emacs-lisp
-
-  ;; Tree-sitter highlight
-  ;; Base framework, syntax highlighting.
-  (use-package tree-sitter
-    :diminish (tree-sitter-mode)
-    :hook ((after-init . global-tree-sitter-mode)
-	   (tree-sitter-after-on . tree-sitter-hl-mode)))
-
-  ;; Language bundle.
-  (use-package tree-sitter-langs
-    :demand t
-    :after tree-sitter)
-
+  (customize-set-variable 'treesit-font-lock-level 4)
+  (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist
+	       '(c-or-c++-mode . c-or-c++-ts-mode))
 #+end_src
 * Elfeed
 #+begin_src emacs-lisp
