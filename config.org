@@ -49,7 +49,8 @@
 				 (file "inbox.org")
 				 "* %?")))
 
-  (setq org-refile-targets '(("gtd.org" :maxlevel . 5)))
+  (setq org-refile-targets '(("gtd.org" :maxlevel . 5)
+			     ("someday.org" :maxlevel . 5)))
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-default-notes-file (concat org-directory "/inbox.org"))
@@ -58,11 +59,13 @@
   (setq org-startup-folded t)
   (setq org-agenda-inhibit-startup t)
   (setq org-todo-repeat-to-state t)
-  (setq org-stuck-projects '("+project-someday-maybe-TODO=\"DONE\"-SCHEDULED>\"<today>\"" ("NEXT")))
+  (setq org-stuck-projects '("+project-TODO=\"DONE\"-SCHEDULED>\"<today>\"" ("NEXT")))
   (setq org-tags-exclude-from-inheritance '("project"))
   ;; Agenda
-  (setq org-agenda-files '("inbox.org" "gtd.org"))
-  (setq org-agenda-text-search-extra-files '(agenda-archives))
+  (setq org-agenda-files '("gtd.org"))
+  (setq org-agenda-text-search-extra-files `(agenda-archives
+					     ,(concat org-directory "/inbox.org")
+					     ,(concat org-directory "/someday.org")))
   (setq org-agenda-prefix-format
 	'((agenda . "  %-12t%(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))%s")
 	  (todo . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
@@ -89,9 +92,10 @@
 		  ((org-agenda-overriding-header "Inbox:")
 		   (org-agenda-files '("inbox.org"))
 		   (org-agenda-prefix-format "  ")))))
-	  ("w" "Waiting List"
-	   ((tags "wait"
-		  ((org-agenda-overriding-header "Waiting List:")
+	  ("f" "Someday/Maybe"
+	   ((tags "someday"
+		  ((org-agenda-overriding-header "Someday/Maybe:")
+		   (org-agenda-files '("someday.org"))
 		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
 	  ("c" "Completed Today"
 	   ((tags "CLOSED>=\"<today>\""
