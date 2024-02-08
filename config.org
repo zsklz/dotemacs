@@ -54,7 +54,7 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-default-notes-file (concat org-directory "/inbox.org"))
-  (setq org-archive-save-context-info '(category olpath itags))
+  (setq org-archive-save-context-info '(olpath itags))
   (setq org-archive-subtree-save-file-p t)
   (setq org-startup-folded t)
   (setq org-agenda-inhibit-startup t)
@@ -67,10 +67,10 @@
 					     ,(concat org-directory "/inbox.org")
 					     ,(concat org-directory "/someday.org")))
   (setq org-agenda-prefix-format
-	'((agenda . "  %-12t%(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))%s")
-	  (todo . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
-	  (tags . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
-	  (search . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))
+	'((agenda . "  %-12t%s")
+	  (todo . "  ")
+	  (tags . "  ")
+	  (search . "  ")))
   (setq org-agenda-current-time-string "> now <"
 	org-agenda-time-grid
 	'((daily today require-timed)
@@ -96,11 +96,11 @@
 	   ((tags "someday"
 		  ((org-agenda-overriding-header "Someday/Maybe:")
 		   (org-agenda-files '("someday.org"))
-		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
+		   (org-agenda-prefix-format "  ")))))
 	  ("c" "Completed Today"
 	   ((tags "CLOSED>=\"<today>\""
 		  ((org-agenda-overriding-header "Completed Today:")
-		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))))
+		   (org-agenda-prefix-format "  ")))))))
 
 #+end_src
 * Calendar & Diary
