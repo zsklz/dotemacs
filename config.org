@@ -54,23 +54,21 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-default-notes-file (concat org-directory "/inbox.org"))
-  (setq org-archive-save-context-info '(olpath itags))
+  (setq org-archive-save-context-info '(category olpath itags))
   (setq org-archive-subtree-save-file-p t)
   (setq org-startup-folded t)
   (setq org-agenda-inhibit-startup t)
   (setq org-todo-repeat-to-state t)
-  (setq org-stuck-projects '("+project-TODO=\"DONE\"-SCHEDULED>\"<today>\"" ("NEXT")))
+  (setq org-stuck-projects '("+project-TODO=\"DONE\"-CATEGORY=\"someday\"-SCHEDULED>\"<today>\"" ("NEXT")))
   (setq org-tags-exclude-from-inheritance '("project"))
   ;; Agenda
-  (setq org-agenda-files '("gtd.org"))
-  (setq org-agenda-text-search-extra-files `(agenda-archives
-					     ,(concat org-directory "/inbox.org")
-					     ,(concat org-directory "/someday.org")))
+  (setq org-agenda-files '("inbox.org" "gtd.org" "someday.org"))
+  (setq org-agenda-text-search-extra-files '(agenda-archives))
   (setq org-agenda-prefix-format
-	'((agenda . "  %-12t%s")
-	  (todo . "  ")
-	  (tags . "  ")
-	  (search . "  ")))
+	'((agenda . "  %-12t%(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))%s")
+	  (todo . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	  (tags . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")
+	  (search . "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))
   (setq org-agenda-current-time-string "> now <"
 	org-agenda-time-grid
 	'((daily today require-timed)
@@ -88,19 +86,19 @@
 
   (setq org-agenda-custom-commands
 	'(("i" "Inbox"
-	   ((tags "inbox"
+	   ((tags "category=\"inbox\""
 		  ((org-agenda-overriding-header "Inbox:")
 		   (org-agenda-files '("inbox.org"))
-		   (org-agenda-prefix-format "  ")))))
+		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
 	  ("f" "Someday/Maybe"
-	   ((tags "someday"
+	   ((tags "category=\"someday\""
 		  ((org-agenda-overriding-header "Someday/Maybe:")
 		   (org-agenda-files '("someday.org"))
-		   (org-agenda-prefix-format "  ")))))
+		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))
 	  ("c" "Completed Today"
 	   ((tags "CLOSED>=\"<today>\""
 		  ((org-agenda-overriding-header "Completed Today:")
-		   (org-agenda-prefix-format "  ")))))))
+		   (org-agenda-prefix-format "  %(if (org-get-category) (format \"(%s) \" (org-get-category)) (string))")))))))
 
 #+end_src
 * Calendar & Diary
